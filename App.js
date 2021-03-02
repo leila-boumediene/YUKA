@@ -1,10 +1,21 @@
 // une fois le package et les bibliothèques installés concernant la navigation, je les importe.
 
 import React from "react";
+import {
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  SafeAreaView,
+  StatusBar,
+} from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+
+// import { Ionicons } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
@@ -13,90 +24,88 @@ const Tab = createMaterialTopTabNavigator();
 
 import ProductsScreen from "./containers/ProductsScreen";
 import CameraScreen from "./containers/CameraScreen";
-// import SplashScreen from "./containers/SplashScreen";
+import SplashScreen from "./containers/SplashScreen";
 import ProductScreen from "./containers/ProductScreen";
 import FavoritesScreen from "./containers/FavoritesScreen";
+import GoodProductsScreen from "./containers/GoodProductsScreen";
+// import { Button } from "react-native";
 
 // Je crée ma fonction
 function App() {
   return (
-    <NavigationContainer>
-      {/* Stack navigator nous permet de naviguer entre les écrans */}
-      <Stack.Navigator>
-        <Stack.Screen name="Products" component={ProductsScreen}></Stack.Screen>
-        <Stack.Screen name="Camera" component={CameraScreen}></Stack.Screen>
-        {/* <Stack.Screen name="SplashScreen" component={SplashScreen}></Stack.Screen> */}
-        <Stack.Screen name="Product" component={ProductScreen}></Stack.Screen>
-        <Stack.Screen
-          name="Favorites"
-          component={FavoritesScreen}
-        ></Stack.Screen>
-      </Stack.Navigator>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Tab"
-          options={{ headerShown: false, animationEnabled: false }}
-        >
-          {() => (
-            <Tab.Navigator
-              tabBarOptions={{
-                activeTintColor: "black",
-                inactiveTintColor: "white",
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <NavigationContainer style={styles.bar}>
+          {/* Tab navigator nous permet de naviguer entre les écrans */}
+          <Tab.Screen name="SplashScreen" component={SplashScreen}></Tab.Screen>
+          <Tab.Navigator
+            tabBarOptions={{
+              labelStyle: { fontSize: 12 },
+              tabStyle: { width: 70, height: 60 },
+              style: { backgroundColor: "#5dcf70" },
+              indicatorStyle: { backgroundColor: "#ffffff" },
+              showIcon: true,
+            }}
+          >
+            <Tab.Screen
+              name="Products"
+              component={ProductsScreen}
+              options={{
+                title: "",
+                tabBarIcon: () => {
+                  return <FontAwesome5 name="carrot" size={24} color="black" />;
+                },
               }}
-            >
-              <Tab.Screen
-                name="Products"
-                options={{
-                  tabBarLabel: "Products",
-                  tabBarIcon: ({ color, size }) => (
-                    <Ionicons
-                      name={"carrot"}
-                      size={size}
-                      color={color}
-                    ></Ionicons>
-                  ),
-                }}
-              >
-                {() => (
-                  <Stack.Navigator>
-                    <Stack.Screen
-                      name="Products"
-                      options={{
-                        title: "Products",
-                        headerStyle: { backgroundColor: "red" },
-                        headerTitleStyle: { colors: "white" },
-                      }}
-                    ></Stack.Screen>
-                  </Stack.Navigator>
-                )}
-              </Tab.Screen>
-            </Tab.Navigator>
-          )}
-        </Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
+            />
+            <Tab.Screen
+              name="GoodProducts"
+              component={GoodProductsScreen}
+              options={{
+                title: "",
+                tabBarIcon: () => {
+                  return (
+                    <MaterialIcons
+                      name="compare-arrows"
+                      size={24}
+                      color="black"
+                    />
+                  );
+                },
+              }}
+            />
+            <Tab.Screen name="Camera" component={CameraScreen} />
+            <Tab.Screen
+              name="SplashScreen"
+              component={SplashScreen}
+            ></Tab.Screen>
+            <Tab.Screen name="Product" component={ProductScreen} />
+            <Tab.Screen name="Favorites" component={FavoritesScreen} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
-// import { StatusBar } from 'expo-status-bar';
-// import React from 'react';
-// import { StyleSheet, Text, View } from 'react-native';
-
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <Text>Open up App.js to start working on your app!</Text>
-//       <StatusBar style="auto" />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
 export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: StatusBar.currentHeight,
+  },
+  scrollView: {
+    marginTop: Platform.OS === "android" ? Constants.statusBarHeight : 0,
+  },
+  bar: {
+    backgroundColor: "lightgreen",
+  },
+  topbar: {
+    marginTop: 40,
+    backgroundColor: "lightgreen",
+  },
+  icon: {
+    height: 10,
+    width: 10,
+  },
+});
