@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 
 function SplashScreen() {
   return (
-    <View>
+    <View style={styles.container}>
       <Image style={styles.image} source={require("../assets/Slash.png")} />
     </View>
   );
@@ -20,12 +20,12 @@ function SplashScreen() {
 export default SplashScreen;
 
 const styles = StyleSheet.create({
-  slash: {
-    flex: 1,
-  },
-  imgae: {
-    resizeMode: "cover", // or 'stretch'
-    height: "auto",
-    width: "auto",
-  },
+  // container: {
+  //   flex: 1,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   flexDirection: "column",
+  //   height: 800,
+  // },
+  // imgae: {},
 });

@@ -14,6 +14,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 // import { Ionicons } from "@expo/vector-icons";
 
@@ -48,6 +50,16 @@ function App() {
             }}
           >
             <Tab.Screen
+              name="Splash"
+              options={{
+                title: "",
+                header: () => null,
+              }}
+            >
+              {() => <SplashScreen />}
+            </Tab.Screen>
+
+            <Tab.Screen
               name="Products"
               component={ProductsScreen}
               options={{
@@ -57,6 +69,7 @@ function App() {
                 },
               }}
             />
+            <Tab.Screen name="Product" component={ProductScreen} />
             <Tab.Screen
               name="GoodProducts"
               component={GoodProductsScreen}
@@ -73,13 +86,27 @@ function App() {
                 },
               }}
             />
-            <Tab.Screen name="Camera" component={CameraScreen} />
             <Tab.Screen
-              name="SplashScreen"
-              component={SplashScreen}
-            ></Tab.Screen>
-            <Tab.Screen name="Product" component={ProductScreen} />
-            <Tab.Screen name="Favorites" component={FavoritesScreen} />
+              name="Camera"
+              component={CameraScreen}
+              options={{
+                title: "",
+                tabBarIcon: () => {
+                  return <AntDesign name="barcode" size={24} color="black" />;
+                },
+              }}
+            />
+
+            <Tab.Screen
+              name="Favorites"
+              component={FavoritesScreen}
+              options={{
+                title: "",
+                tabBarIcon: () => {
+                  return <AntDesign name="staro" size={24} color="black" />;
+                },
+              }}
+            />
           </Tab.Navigator>
         </NavigationContainer>
       </ScrollView>
