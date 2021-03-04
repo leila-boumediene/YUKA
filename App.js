@@ -41,7 +41,10 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Tab" options={{ header: () => null }}>
+        <Stack.Screen
+          name="TabBar"
+          options={{ headerShown: false, animationEnabled: false }}
+        >
           {() => (
             <Tab.Navigator
               tabBarOptions={{
@@ -54,7 +57,6 @@ function App() {
             >
               <Tab.Screen
                 name="Products"
-                component={ProductsScreen}
                 options={{
                   title: "",
                   tabBarIcon: () => {
@@ -66,66 +68,77 @@ function App() {
               >
                 {() => (
                   <Stack.Navigator>
-                    <Stack.Screen name="Product" component={ProductScreen}>
-                      {() => <ProductScreen />}
+                    <Stack.Screen name="Products">
+                      {(props) => <ProductsScreen {...props} />}
+                    </Stack.Screen>
+                    <Stack.Screen name="Product">
+                      {(props) => <ProductScreen {...props} />}
                     </Stack.Screen>
                   </Stack.Navigator>
                 )}
               </Tab.Screen>
-              )}
-              
-              <Stack.Navigator>
               <Tab.Screen
                 name="Camera"
-                component={CameraScreen}
                 options={{
                   title: "",
                   tabBarIcon: () => {
-                    return <AntDesign name="barcode" size={24} color="black" />;
+                    <AntDesign name="barcode" size={24} color="black" />;
                   },
                 }}
-              />
-              </Stack.Navigator>
-              <Stack.Navigator>
+              >
+                {() => (
+                  <Stack.Navigator>
+                    <Stack.Screen name="Camera">
+                      {() => <CameraScreen />}
+                    </Stack.Screen>
+                  </Stack.Navigator>
+                )}
+              </Tab.Screen>
               <Tab.Screen
                 name="Favorites"
-                component={FavoritesScreen}
                 options={{
                   title: "",
                   tabBarIcon: () => {
-                    return <AntDesign name="staro" size={24} color="black" />;
+                    <AntDesign name="staro" size={24} color="black" />;
                   },
                 }}
-              />
-                </Stack.Navigator>
-
+              >
                 <Stack.Navigator>
-                <Tab.Screen
-        name="GoodProducts"
-        component={GoodProductsScreen}
-        options={{
-          title: "",
-          tabBarIcon: () => {
-            return (
-              <MaterialIcons
-                name="compare-arrows"
-                size={24}
-                color="black"
-              />
-            );
-          },
-        }}
-      />
+                  <Stack.Screen name="Favorites">
+                    {() => <FavoritesScreen />}
+                  </Stack.Screen>
                 </Stack.Navigator>
-                
-                
-                </NavigationContainer>  
-          
-      )}
-    
- 
+              </Tab.Screen>
+              <Tab.Screen
+                name="GoodProducts"
+                options={{
+                  title: "",
+                  tabBarIcon: () => {
+                    return (
+                      <MaterialIcons
+                        name="compare-arrows"
+                        size={24}
+                        color="black"
+                      />
+                    );
+                  },
+                }}
+              >
+                <Stack.Navigator>
+                  <Stack.Screen name="GoodProducts">
+                    {() => <GoodProductsScreen />}
+                  </Stack.Screen>
+                </Stack.Navigator>
+              </Tab.Screen>
+            </Tab.Navigator>
+          )}
+        </Stack.Screen>
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
-xport default App;
+export default App;
 
 const styles = StyleSheet.create({
   container: {
@@ -147,5 +160,3 @@ const styles = StyleSheet.create({
     width: 10,
   },
 });
-
-
