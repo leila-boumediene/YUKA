@@ -1,6 +1,6 @@
 // une fois le package et les bibliothèques installés concernant la navigation, je les importe.
 
-// Conseil à retenir suite à l'issue avec Alexis : N'oublies pas : un Navigator contient des Screen, qui renvoient des Composants ou un autre Navigateur.
+// Conseil à retenir suite à l'issue avec Alexis: N'oublies pas : un Navigator contient des Screen, qui renvoient des Composants ou un autre Navigateur.
 // En simplifié, ca fait que tu devras forcément alterner Navigator => Screen => Navigator => Screen...
 // Du coup, c'est ton <Tab.Screen name="Products" qui devra contenir un <Stack.Navigator>, qui lui contiendra tes deux <Stack.screen>!
 
@@ -39,12 +39,10 @@ import GoodProductsScreen from "./containers/GoodProductsScreen";
 // Je crée ma fonction
 function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <NavigationContainer style={styles.bar}>
-          <Tab.Navigator>
-            {/* Tab navigator nous permet de naviguer entre les écrans */}
-            <Tab.Screen name="SplashScreen" component={SplashScreen} />
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Tab" options={{ header: () => null }}>
+          {() => (
             <Tab.Navigator
               tabBarOptions={{
                 labelStyle: { fontSize: 12 },
@@ -54,124 +52,80 @@ function App() {
                 showIcon: true,
               }}
             >
-              <Stack.Navigator>
-                <Tab.Screen
-                  name="Products"
-                  component={ProductsScreen}
-                  options={{
-                    title: "",
-                    tabBarIcon: () => {
-                      return (
-                        <FontAwesome5 name="carrot" size={24} color="black" />
-                      );
-                    },
-                  }}
-                />
+              <Tab.Screen
+                name="Products"
+                component={ProductsScreen}
+                options={{
+                  title: "",
+                  tabBarIcon: () => {
+                    return (
+                      <FontAwesome5 name="carrot" size={24} color="black" />
+                    );
+                  },
+                }}
+              >
                 {() => (
                   <Stack.Navigator>
-                    <Stack.Screen name="Product" component={ProductScreen} />
+                    <Stack.Screen name="Product" component={ProductScreen}>
+                      {() => <ProductScreen />}
+                    </Stack.Screen>
                   </Stack.Navigator>
                 )}
+              </Tab.Screen>
+              )}
+              
+              <Stack.Navigator>
+              <Tab.Screen
+                name="Camera"
+                component={CameraScreen}
+                options={{
+                  title: "",
+                  tabBarIcon: () => {
+                    return <AntDesign name="barcode" size={24} color="black" />;
+                  },
+                }}
+              />
+              </Stack.Navigator>
+              <Stack.Navigator>
+              <Tab.Screen
+                name="Favorites"
+                component={FavoritesScreen}
+                options={{
+                  title: "",
+                  tabBarIcon: () => {
+                    return <AntDesign name="staro" size={24} color="black" />;
+                  },
+                }}
+              />
+                </Stack.Navigator>
 
-                {/* <Stack.Screen name="Product" component={ProductScreen} />
-                {() => <ProductScreen />} */}
-              </Stack.Navigator>
-              <Stack.Navigator>
-                <Stack.Screen
-                  name="Favorites"
-                  component={FavoritesScreen}
-                  options={{
-                    title: "",
-                    tabBarIcon: () => {
-                      return <AntDesign name="staro" size={24} color="black" />;
-                    },
-                  }}
-                />
-                {() => <FavoritesScreen />}
-              </Stack.Navigator>
-              <Stack.Navigator>
+                <Stack.Navigator>
                 <Tab.Screen
-                  name="Camera"
-                  component={CameraScreen}
-                  options={{
-                    title: "",
-                    tabBarIcon: () => {
-                      return (
-                        <AntDesign name="barcode" size={24} color="black" />
-                      );
-                    },
-                  }}
-                />
-                {() => <CameraScreen />}
-              </Stack.Navigator>
-            </Tab.Navigator>
-            ;
-            {/* <Tab.Screen
-              name="Splash"
-              options={{
-                title: "",
-                header: () => null,
-              }}
-            >
-              {() => <SplashScreen />}
-            </Tab.Screen>
+        name="GoodProducts"
+        component={GoodProductsScreen}
+        options={{
+          title: "",
+          tabBarIcon: () => {
+            return (
+              <MaterialIcons
+                name="compare-arrows"
+                size={24}
+                color="black"
+              />
+            );
+          },
+        }}
+      />
+                </Stack.Navigator>
+                
+                
+                </NavigationContainer>  
+          
+      )}
+    
+ 
 
-            <Tab.Screen
-              name="Products"
-              component={ProductsScreen}
-              options={{
-                title: "",
-                tabBarIcon: () => {
-                  return <FontAwesome5 name="carrot" size={24} color="black" />;
-                },
-              }}
-            />
-            <Tab.Screen name="Product" component={ProductScreen} />
-            <Tab.Screen
-              name="GoodProducts"
-              component={GoodProductsScreen}
-              options={{
-                title: "",
-                tabBarIcon: () => {
-                  return (
-                    <MaterialIcons
-                      name="compare-arrows"
-                      size={24}
-                      color="black"
-                    />
-                  );
-                },
-              }}
-            />
-            <Tab.Screen
-              name="Camera"
-              component={CameraScreen}
-              options={{
-                title: "",
-                tabBarIcon: () => {
-                  return <AntDesign name="barcode" size={24} color="black" />;
-                },
-              }}
-            />
-
-            <Tab.Screen
-              name="Favorites"
-              component={FavoritesScreen}
-              options={{
-                title: "",
-                tabBarIcon: () => {
-                  return <AntDesign name="staro" size={24} color="black" />;
-                },
-              }}
-            /> */}
-          </Tab.Navigator>
-        </NavigationContainer>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
-export default App;
+xport default App;
 
 const styles = StyleSheet.create({
   container: {
@@ -193,3 +147,5 @@ const styles = StyleSheet.create({
     width: 10,
   },
 });
+
+
