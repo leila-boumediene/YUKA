@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React from "react";
 import { View, Text, Button, StyleSheet, FlatList } from "react-native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -6,6 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { useEffect, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
@@ -18,19 +19,20 @@ function ProductsScreen() {
   const navigation = useNavigation();
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const { params } = useRoute();
 
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       try {
-  //         const response = await axios.get`https://world.openfoodfacts.org/api/v0/product/737628064502.json`;
-  //         console.log(response.json());
-  //         setIsLoading(false);
-  //       } catch (error) {
-  //         alert("An error");
-  //       }
-  //     };
-  //     fetchData();
-  //   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const historyProduct = await AsyncStorage.getItem("historyProduct");
+        console.log(historyProduct);
+      } catch (error) {
+        console.log(error.massage);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
       <View style={styles.container}>
