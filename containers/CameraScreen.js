@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { useNavigation } from "@react-navigation/core";
+import { axios } from "axios";
 
 function CameraScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [data, setData] = useState();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -28,6 +30,19 @@ function CameraScreen() {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `https://world.openfoodfacts.org/api/v0/product/${data}.json`
+      );
+      console.log(response.data);
+      setData(response.data);
+      navigation.navigate("ProductScreen", { productScanned: data });
+    } catch (error) {
+      console.log(error.message);
+    }
+    fetchData();
+  };
 
   return (
     <View

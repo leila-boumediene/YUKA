@@ -14,6 +14,8 @@ import { useNavigation, useRoute } from "@react-navigation/core";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScrollView } from "react-native-gesture-handler";
 
+import Camera from "../containers/CameraScreen";
+
 // import { AsyncStorage } from "react-native";
 
 function ProductScreen(navigation, route) {

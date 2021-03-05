@@ -46,7 +46,7 @@ function ProductsScreen(navigation, route) {
         <View style={styles.products}>
           {/* <SearchBar placeholder="Search" /> */}
           <Text>Products Screen</Text>
-          <Button
+          {/* <Button
             title="voir le produit"
             onPress={() =>
               navigation.navigate("Products", {
@@ -54,7 +54,7 @@ function ProductsScreen(navigation, route) {
                 params: { scannedId },
               })
             }
-          ></Button>
+          ></Button> */}
           <View>
             <Button
               title="scanner"
