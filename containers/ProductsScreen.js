@@ -5,8 +5,9 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { createStackNavigator } from "@react-navigation/stack";
 import { useEffect, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
-import axios from "axios";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
@@ -15,17 +16,23 @@ const Stack = createStackNavigator();
 // import ProductScreen from "./ProductScreen";
 // import FavoritesScreen from "./FavoritesScreen";
 // je crée ma fonction ProductScreen qui va recevoir en argument une props navigation
-function ProductsScreen() {
-  const navigation = useNavigation();
+function ProductsScreen(navigation, route) {
+  //   const navigation = useNavigation();
   const [data, setData] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const { params } = useRoute();
+  const [historyProduct, setHistoryProduct] = useState();
+
+  //   const { params } = useRoute();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const historyProduct = await AsyncStorage.getItem("historyProduct");
         console.log(historyProduct);
+
+        let register = JSON.parse(historyProduct);
+        setHistoryProduct(register);
+        setIsLoading(false);
       } catch (error) {
         console.log(error.massage);
       }
@@ -41,7 +48,12 @@ function ProductsScreen() {
           <Text>Products Screen</Text>
           <Button
             title="voir le produit"
-            onPress={() => navigation.navigate("Product")}
+            onPress={() =>
+              navigation.navigate("Products", {
+                screen: "Product",
+                params: { scannedId },
+              })
+            }
           ></Button>
           <View>
             <Button

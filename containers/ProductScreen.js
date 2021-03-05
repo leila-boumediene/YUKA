@@ -4,6 +4,7 @@ import {
   Text,
   Button,
   StyleSheet,
+  ActivityIndicator,
   //   Image,
   //   ScrollView,J
   //   ActivityIndicator,
@@ -11,13 +12,14 @@ import {
 import axios from "axios";
 import { useNavigation, useRoute } from "@react-navigation/core";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ScrollView } from "react-native-gesture-handler";
 
 // import { AsyncStorage } from "react-native";
 
-function ProductScreen() {
+function ProductScreen(navigation, route) {
   // je transmets le params
-  const { params } = useRoute();
-  const navigation = useNavigation();
+  //   const { params } = useRoute();
+  //   const navigation = useNavigation();
   // je crée mes states
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +28,7 @@ function ProductScreen() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get`https://world.openfoodfacts.org/api/v0/product/${productScanned}.json`;
+        const response = await axios.get`https://world.openfoodfacts.org/api/v0/product/${params.productScanned}.json`;
         // Après un test sur mon téléphone ça fonctionne bien
         console.log(response.data);
         setData(response.data);
@@ -40,19 +42,19 @@ function ProductScreen() {
         console.log(infoObject);
 
         // AsyncStorage permet de garder dans la mémoire du téléphone mes produits que je pourrais sauvegarder dans products
+        // AsyncStorage ne prend que des chaînes de caractère
 
-        // const product = async () => {
-        //   try {
-        //     const stockProduct = await AsyncStorage.setItem(historyProduct);
-        //     if (value !== null) {
-        //       console.log(stockProduct);
-        //       const productTab = [];
-        //       for (let i = 0; i < tab.length; i++) {
-        //         productTab.push;
-        //       }
-        //     }
-        //   } catch (error) {}
-        // };
+        let stockageProduct = await AsyncStorage.getItem("historyProduct");
+
+        //    dans un premier temps on voit si ce n'est pas une chaîne de caractères
+        if (stockageProduct === null) {
+          // alors je crée un tableau
+          let tab = [];
+          // j'ajoute les élèments dans mon objet infoObject et dans le tableau
+          tab.push(infoObject);
+          //  je stringuify mon tableau
+          await AsyncStorage.setItem("historyProduct", JSON.stringify(tab));
+        }
 
         setIsLoading(false);
       } catch (error) {
@@ -60,21 +62,30 @@ function ProductScreen() {
       }
     };
     fetchData();
-  }, []);
-  return (
-    <View style={styles.container1}>
-      <View style={styles.product}>
-        <Text>Détails du produit</Text>
-        <Button
-          title="je mets en favoris ce produit"
-          onPress={() => navigation.navigate("Favorites")}
-        ></Button>
-        <Button
-          title="go products"
-          onPress={() => navigation.goBack("Products")}
-        ></Button>
+  }, [params.productScanned]);
+
+  return isLoading ? (
+    <ActivityIndicator
+      color="pink"
+      size="large"
+      style={styles.activityIndicator}
+    />
+  ) : (
+    <ScrollView>
+      <View style={styles.container1}>
+        <View style={styles.product}>
+          <Text>Détails du produit</Text>
+          <Button
+            title="je mets en favoris ce produit"
+            onPress={() => navigation.navigate("Favorites")}
+          ></Button>
+          <Button
+            title="go products"
+            onPress={() => navigation.goBack("Products")}
+          ></Button>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 export default ProductScreen;

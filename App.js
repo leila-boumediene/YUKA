@@ -14,6 +14,7 @@ import {
   StatusBar,
   ActivityIndicator,
 } from "react-native";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
@@ -21,6 +22,8 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { setStatusBarNetworkActivityIndicatorVisible } from "expo-status-bar";
 
 // import { Ionicons } from "@expo/vector-icons";
 
@@ -35,29 +38,43 @@ import SplashScreen from "./containers/SplashScreen";
 import ProductScreen from "./containers/ProductScreen";
 import FavoritesScreen from "./containers/FavoritesScreen";
 import GoodProductsScreen from "./containers/GoodProductsScreen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
 // import { Button } from "react-native";
 
 // Je crée ma fonction
 function App() {
   const [historyProduct, setHistoryProduct] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [productId, setProductId] = useState();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const historyProduct = await AsyncStorage.getItem("historyProduct");
-      setHistoryProduct(historyProduct);
-      setIsLoading(false);
-    };
-    fetchData;
-  }, []);
-  return isLoading ? (
-    <ActivityIndicator
-      color="pink"
-      size="large"
-      style={styles.activityIndicator}
-    />
-  ) : (
+  // création d'un ID
+  const IdProduct = async (id) => {
+    // si l'id existe dans la BDD alors je l'enregistre dans la mémoire du téléphone
+    if (id) {
+      AsyncStorage.setItem("productId", id);
+    } else {
+      alert("product is already exist");
+    }
+    setProductId(id);
+  };
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const historyProduct = await AsyncStorage.getItem("historyProduct");
+  //     setHistoryProduct(historyProduct);
+  //     setIsLoading(false);
+  //   };
+  //   fetchData;
+  // }, []);
+  // return isLoading ? (
+  //   <ActivityIndicator
+  //     color="pink"
+  //     size="large"
+  //     style={styles.activityIndicator}
+  //   />
+  // ) : (
+  // return (
+  return (
     <SafeAreaView style={styles.container}>
       {/* <ScrollView style={styles.scrollView}> */}
       <NavigationContainer>
@@ -67,7 +84,7 @@ function App() {
             name="TabBar"
             options={{ header: () => null, animationEnabled: false }}
           >
-            {() => (
+            {(props) => (
               <Tab.Navigator
                 tabBarOptions={{
                   labelStyle: { fontSize: 12 },
@@ -91,10 +108,20 @@ function App() {
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen name="Products">
-                        {(props) => <ProductsScreen {...props} />}
+                        {(props) => (
+                          <ProductsScreen
+                            {...props}
+                            historyProduct={historyProduct}
+                          />
+                        )}
                       </Stack.Screen>
                       <Stack.Screen name="Product">
-                        {(props) => <ProductScreen {...props} />}
+                        {(props) => (
+                          <ProductScreen
+                            {...props}
+                            historyProduct={historyProduct}
+                          />
+                        )}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
@@ -113,7 +140,7 @@ function App() {
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen name="Camera">
-                        {() => <CameraScreen />}
+                        {(props) => <CameraScreen {...props} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
