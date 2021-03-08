@@ -29,6 +29,7 @@ function ProductScreen(navigation, route) {
   const [code, setCode] = useState();
   const [name, setName] = useState();
   const [brand, setBrand] = useState();
+  const [infoOject, setInfoOject] = useState;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,16 +53,16 @@ function ProductScreen(navigation, route) {
         let stockageProduct = await AsyncStorage.getItem("product");
 
         //    dans un premier temps on voit si ce n'est pas une chaîne de caractères
-        if (stockageProduct === null) {
-          // alors je crée un tableau
-          let tab = [];
-          // j'ajoute les élèments dans mon objet infoObject et dans le tableau
-          tab.push(infoObject);
-          //  je stringuify mon tableau
-          await AsyncStorage.setItem("product", JSON.stringify(tab));
-        }
+        // if (stockageProduct === null) {
+        //   // alors je crée un tableau
+        //   let tab = [];
+        //   // j'ajoute les élèments dans mon objet infoObject et dans le tableau
+        //   tab.push(infoObject);
+        //   //  je stringuify mon tableau
+        //   await AsyncStorage.setItem("product", JSON.stringify(tab));
+        // }
 
-        setIsLoading(false);
+        // setIsLoading(false);
       } catch (error) {
         alert("An error");
       }
@@ -77,6 +78,7 @@ function ProductScreen(navigation, route) {
     />
   ) : (
     <ScrollView>
+      <Text></Text>
       <View style={styles.container1}>
         <View style={styles.product}>
           <Text>Détails du produit</Text>

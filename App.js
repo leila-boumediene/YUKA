@@ -46,6 +46,7 @@ function App() {
   const [historyProduct, setHistoryProduct] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [productData, setProductData] = useState();
+  // const [IdProduct, setIdProduct] = useState();
 
   // création d'un ID
   const IdProduct = async (id) => {
@@ -55,7 +56,7 @@ function App() {
     } else {
       alert("product is already exist");
     }
-    setProductId(id);
+    IdProduct(id);
   };
   // faire une issue pour demander
   useEffect(() => {
@@ -132,7 +133,7 @@ function App() {
                         {(props) => (
                           <ProductScreen
                             {...props}
-                            historyProduct={historyProduct}
+                            // historyProduct={historyProduct}
                           />
                         )}
                       </Stack.Screen>
