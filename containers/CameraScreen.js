@@ -4,7 +4,8 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { useNavigation } from "@react-navigation/core";
 import { axios } from "axios";
 
-function CameraScreen() {
+function CameraScreen({ IdProduct }) {
+  const nav = useNavigation();
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [data, setData] = useState();
@@ -20,8 +21,10 @@ function CameraScreen() {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    navigation.navigate("Product", { productScanned: data });
-    setScanned(false);
+    navigation.navigate("Product", { data: data });
+    setData(data);
+    IdProduct(data);
+    console.log(data);
   };
 
   if (hasPermission === null) {
@@ -30,19 +33,19 @@ function CameraScreen() {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(
-        `https://world.openfoodfacts.org/api/v0/product/${data}.json`
-      );
-      console.log(response.data);
-      setData(response.data);
-      navigation.navigate("ProductScreen", { productScanned: data });
-    } catch (error) {
-      console.log(error.message);
-    }
-    fetchData();
-  };
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `https://world.openfoodfacts.org/api/v0/product/${data}.json`
+  //       );
+  //       console.log(response.data);
+  //       setData(response.data);
+  //       navigation.navigate("ProductScreen", { productScanned: data });
+  //     } catch (error) {
+  //       console.log(error.message);
+  //     }
+  //     fetchData();
+  //   };
 
   return (
     <View

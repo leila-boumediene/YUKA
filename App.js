@@ -45,7 +45,7 @@ import GoodProductsScreen from "./containers/GoodProductsScreen";
 function App() {
   const [historyProduct, setHistoryProduct] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [productId, setProductId] = useState();
+  const [productData, setProductData] = useState();
 
   // création d'un ID
   const IdProduct = async (id) => {
@@ -57,24 +57,37 @@ function App() {
     }
     setProductId(id);
   };
+  // faire une issue pour demander
+  useEffect(() => {
+    // Fetch the token from storage then navigate to our appropriate place
+    const bootstrapAsync = async () => {
+      // We should also handle error for production apps
+      const productData = await AsyncStorage.getItem("productData");
+
+      // This will switch to the App screen or Auth screen and this loading
+      // screen will be unmounted and thrown away.
+      setIsLoading(false);
+      setProductData(productData);
+    };
+
+    bootstrapAsync();
+  }, []);
 
   // useEffect(() => {
   //   const fetchData = async () => {
-  //     const historyProduct = await AsyncStorage.getItem("historyProduct");
-  //     setHistoryProduct(historyProduct);
+  //     const productData = await AsyncStorage.getItem("productData");
+  //     setProductData(productData);
   //     setIsLoading(false);
   //   };
   //   fetchData;
   // }, []);
-  // return isLoading ? (
-  //   <ActivityIndicator
-  //     color="pink"
-  //     size="large"
-  //     style={styles.activityIndicator}
-  //   />
-  // ) : (
-  // return (
-  return (
+  return isLoading ? (
+    <ActivityIndicator
+      color="pink"
+      size="large"
+      style={styles.activityIndicator}
+    />
+  ) : (
     <SafeAreaView style={styles.container}>
       {/* <ScrollView style={styles.scrollView}> */}
       <NavigationContainer>
@@ -111,7 +124,7 @@ function App() {
                         {(props) => (
                           <ProductsScreen
                             {...props}
-                            historyProduct={historyProduct}
+                            productData={productData}
                           />
                         )}
                       </Stack.Screen>
@@ -140,7 +153,7 @@ function App() {
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen name="Camera">
-                        {(props) => <CameraScreen {...props} />}
+                        {() => <CameraScreen IdProduct={IdProduct} />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}

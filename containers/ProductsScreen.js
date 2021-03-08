@@ -5,7 +5,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import { createStackNavigator } from "@react-navigation/stack";
 import { useEffect, useState } from "react";
 import { FontAwesome } from "@expo/vector-icons";
-
+import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Tab = createMaterialTopTabNavigator();
@@ -16,29 +16,36 @@ const Stack = createStackNavigator();
 // import ProductScreen from "./ProductScreen";
 // import FavoritesScreen from "./FavoritesScreen";
 // je crée ma fonction ProductScreen qui va recevoir en argument une props navigation
-function ProductsScreen(navigation, route) {
+function ProductsScreen(productData, navigation, route) {
   //   const navigation = useNavigation();
   const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-  const [historyProduct, setHistoryProduct] = useState();
 
   //   const { params } = useRoute();
 
   useEffect(() => {
     const fetchData = async () => {
+      //   console.log(data);
       try {
-        const historyProduct = await AsyncStorage.getItem("historyProduct");
-        console.log(historyProduct);
+        const response = await axios.get(
+          "https://world.openfoodfacts.org/api/v0/product/${productData}"
+        );
+        console.log(response.data);
 
-        let register = JSON.parse(historyProduct);
-        setHistoryProduct(register);
-        setIsLoading(false);
+        let addProducts = {
+          code: response.data.product.code,
+          name: response.data.product.name,
+          brand: response.data.product.brands,
+        };
+        console.log(addProducts);
+        // let register = JSON.parse(historyProduct);
+        // setHistoryProduct(register);
+        // setIsLoading(false);
       } catch (error) {
         console.log(error.massage);
       }
     };
     fetchData();
-  }, []);
+  }, [productData]);
 
   return (
     <>
