@@ -4,8 +4,7 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { useNavigation } from "@react-navigation/core";
 import { axios } from "axios";
 
-function CameraScreen({ IdProduct }) {
-  const nav = useNavigation();
+const CameraScreen = ({ idProduct }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [data, setData] = useState();
@@ -21,10 +20,14 @@ function CameraScreen({ IdProduct }) {
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    navigation.navigate("Product", { data: data });
-    setData(data);
-    IdProduct(data);
-    console.log(data);
+    navigation.navigate("Products", {
+      screen: "Product",
+      params: { idProduct: data },
+    });
+    // setData(data);
+    // IdProduct(data);
+    // console.log(data);
+    setScanned(false);
   };
 
   if (hasPermission === null) {
@@ -65,5 +68,5 @@ function CameraScreen({ IdProduct }) {
       )}
     </View>
   );
-}
+};
 export default CameraScreen;

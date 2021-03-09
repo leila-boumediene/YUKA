@@ -16,7 +16,7 @@ const Stack = createStackNavigator();
 // import ProductScreen from "./ProductScreen";
 // import FavoritesScreen from "./FavoritesScreen";
 // je crée ma fonction ProductScreen qui va recevoir en argument une props navigation
-function ProductsScreen(productData, navigation, route) {
+const ProductsScreen = ({ route, navigation }) => {
   //   const navigation = useNavigation();
   const [data, setData] = useState();
 
@@ -26,17 +26,18 @@ function ProductsScreen(productData, navigation, route) {
     const fetchData = async () => {
       //   console.log(data);
       try {
-        const response = await axios.get(
-          "https://world.openfoodfacts.org/api/v0/product/${productData}"
-        );
-        console.log(response.data);
+        let product = await AsyncStorage.getItem("product");
+        console.log(product);
+        let stock = JSON.pars(product);
+        console.log(stock);
+        product(stock);
 
         let addProducts = {
           code: response.data.product.code,
           name: response.data.product.name,
           brand: response.data.product.brands,
         };
-        console.log(addProducts);
+        console.log(response.data);
         // let register = JSON.parse(historyProduct);
         // setHistoryProduct(register);
         // setIsLoading(false);
@@ -45,7 +46,7 @@ function ProductsScreen(productData, navigation, route) {
       }
     };
     fetchData();
-  }, [productData]);
+  }, []);
 
   return (
     <>
@@ -73,7 +74,7 @@ function ProductsScreen(productData, navigation, route) {
       <FlatList />
     </>
   );
-}
+};
 
 export default ProductsScreen;
 

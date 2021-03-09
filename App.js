@@ -43,9 +43,9 @@ import GoodProductsScreen from "./containers/GoodProductsScreen";
 
 // Je crée ma fonction
 function App() {
-  const [historyProduct, setHistoryProduct] = useState();
+  const [product, setProduct] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [productData, setProductData] = useState();
+  // const [product, setProduct] = useState();
   // const [IdProduct, setIdProduct] = useState();
 
   // création d'un ID
@@ -61,17 +61,17 @@ function App() {
   // faire une issue pour demander
   useEffect(() => {
     // Fetch the token from storage then navigate to our appropriate place
-    const bootstrapAsync = async () => {
+    const fetchData = async () => {
       // We should also handle error for production apps
-      const productData = await AsyncStorage.getItem("productData");
+      const product = await AsyncStorage.getItem("product");
 
       // This will switch to the App screen or Auth screen and this loading
       // screen will be unmounted and thrown away.
       setIsLoading(false);
-      setProductData(productData);
+      setProduct(product);
     };
 
-    bootstrapAsync();
+    fetchData();
   }, []);
 
   // useEffect(() => {
@@ -125,7 +125,7 @@ function App() {
                         {(props) => (
                           <ProductsScreen
                             {...props}
-                            productData={productData}
+                            // productData={productData}
                           />
                         )}
                       </Stack.Screen>
