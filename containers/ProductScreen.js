@@ -23,7 +23,7 @@ const ProductScreen = ({ route, navigation }) => {
   // je transmets le params
   //   const { params } = useRoute();
 
-  //   console.log("salut", route);
+  console.log("salut", route);
   //   console.log("coucou", navigation);
   //   const navigation = useNavigation();
   // je crée mes states
@@ -120,7 +120,7 @@ const ProductScreen = ({ route, navigation }) => {
           />
           <Text>{infoObject.name}</Text>
           <Text>{infoObject.brand}</Text>
-          <Text>{infoObject.ingredient}</Text>
+          {/* <Text>{infoObject.ingredient}</Text> */}
         </View>
         <Text></Text>
         <View style={styles.container1}>

@@ -27,6 +27,8 @@ import ProductScreen from "./ProductScreen";
 // je crée ma fonction ProductScreen qui va recevoir en argument une props navigation
 const ProductsScreen = ({ route, navigation }) => {
   //   const navigation = useNavigation();
+  //   console.log("salut", route);
+  //   console.log("coucou", navigation);
   const [data, setData] = useState();
   const [historyProduct, setHistoryProduct] = useState();
 
@@ -37,10 +39,17 @@ const ProductsScreen = ({ route, navigation }) => {
       //   console.log(data);
       try {
         let product = await AsyncStorage.getItem("product");
-        console.log("mon produit récupéré", product);
-        let stock = JSON.pars(product);
-        console.log("mon produit stocké", stock);
-        product(stock);
+        // console.log("mon produit récupéré", product);
+        let stock = JSON.parse(product);
+        // console.log("mon produit stocké", stock);
+        // product(stock);
+        // let infoObject = {
+        //   name: response.data.product.product_name,
+        //   picture: response.data.product.image_front_small_url,
+        //   brand: response.data.product.brands,
+
+        //   ingredient: response.data.product.ingredients,
+        // };
 
         // let register = JSON.parse(historyProduct);
         // setHistoryProduct(register);
@@ -55,28 +64,27 @@ const ProductsScreen = ({ route, navigation }) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        {/* <View>
-          <Image
-            source={{ uri: item.picture }}
+        <View>
+          {/* <Image
+            source={{ uri: product.object.picture }}
             style={styles.image}
             resizeMode="contain"
-          />
-          <Text>{infoObject.name}</Text>
-          <Text>{infoObject.brand}</Text>
-          <Text>{infoObject.ingredient}</Text>
-        </View>{" "}
-        */}
-        {/* <SearchBar placeholder="Search" />
+          /> */}
+          {/* <Text>{product.object.name}</Text> */}
+          {/* <Text>{product.object.brand}</Text>
+          <Text>{iproduct.object.ingredient}</Text> */}
+        </View>
+        {/* <SearchBar placeholder="Search" /> */}
         <Text>Products Screen</Text>
-        {/* <Button
-            title="voir le produit"
-            onPress={() =>
-              navigation.navigate("Products", {
-                screen: "Product",
-                params: { scannedId },
-              })
-            }
-          ></Button> */}
+        <Button
+          title="voir le produit"
+          onPress={() =>
+            navigation.navigate("Products", {
+              screen: "Product",
+              params: { scannedId },
+            })
+          }
+        ></Button>
         <View>
           <Button
             title="scanner"
