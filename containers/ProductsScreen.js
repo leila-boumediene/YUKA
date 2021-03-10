@@ -28,7 +28,7 @@ import ProductScreen from "./ProductScreen";
 const ProductsScreen = ({ route, navigation }) => {
   //   const navigation = useNavigation();
   const [data, setData] = useState();
-  const [infoObject, setInfoObject] = useState();
+  const [historyProduct, setHistoryProduct] = useState();
 
   //   const { params } = useRoute();
 
@@ -55,17 +55,18 @@ const ProductsScreen = ({ route, navigation }) => {
   return (
     <SafeAreaView>
       <ScrollView>
-        <View>
+        {/* <View>
           <Image
-            source={{ uri: infoObject.picture }}
+            source={{ uri: item.picture }}
             style={styles.image}
             resizeMode="contain"
           />
           <Text>{infoObject.name}</Text>
           <Text>{infoObject.brand}</Text>
           <Text>{infoObject.ingredient}</Text>
-        </View>
-        {/* <SearchBar placeholder="Search" /> */}
+        </View>{" "}
+        */}
+        {/* <SearchBar placeholder="Search" />
         <Text>Products Screen</Text>
         {/* <Button
             title="voir le produit"

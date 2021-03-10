@@ -95,6 +95,11 @@ const ProductScreen = ({ route, navigation }) => {
     fetchData();
   }, []);
 
+  //   const favorites = () =>{
+  //       const like = [...product];
+  //       await AsyncStorage.setItem("favorites", JSON.stringify(like))
+  //   }
+
   //   <AntDesign name="heart" size={24} color="black" />
   //   <AntDesign name="hearto" size={24} color="black" />
 
