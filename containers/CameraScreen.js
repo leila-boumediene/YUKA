@@ -4,10 +4,10 @@ import { BarCodeScanner } from "expo-barcode-scanner";
 import { useNavigation } from "@react-navigation/core";
 import { axios } from "axios";
 
-const CameraScreen = ({ idProduct }) => {
+const CameraScreen = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [data, setData] = useState();
+
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -19,15 +19,13 @@ const CameraScreen = ({ idProduct }) => {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
     navigation.navigate("Products", {
       screen: "Product",
       params: { idProduct: data },
     });
-    // setData(data);
-    // IdProduct(data);
-    // console.log(data);
-    setScanned(false);
+
+    // setScanned(false);
   };
 
   if (hasPermission === null) {
@@ -36,19 +34,6 @@ const CameraScreen = ({ idProduct }) => {
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `https://world.openfoodfacts.org/api/v0/product/${data}.json`
-  //       );
-  //       console.log(response.data);
-  //       setData(response.data);
-  //       navigation.navigate("ProductScreen", { productScanned: data });
-  //     } catch (error) {
-  //       console.log(error.message);
-  //     }
-  //     fetchData();
-  //   };
 
   return (
     <View

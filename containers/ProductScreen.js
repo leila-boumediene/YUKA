@@ -23,7 +23,7 @@ const ProductScreen = ({ route, navigation }) => {
   // je transmets le params
   //   const { params } = useRoute();
 
-  console.log("salut", route);
+  //   console.log("salut", route);
   //   console.log("coucou", navigation);
   //   const navigation = useNavigation();
   // je crée mes states
@@ -36,6 +36,7 @@ const ProductScreen = ({ route, navigation }) => {
   const [infoObject, setInfoObject] = useState();
   const [idProduct, setIdProduct] = useState();
   const [favorites, setFavorites] = useState({});
+  const { params } = useRoute();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +45,7 @@ const ProductScreen = ({ route, navigation }) => {
           `https://world.openfoodfacts.org/api/v0/product/${route.params.idProduct}.json`
         );
         // Après un test sur mon téléphone ça fonctionne bien
-        // console.log(response.data);
+        // console.log("ma requête", response.data);
         setData(response.data);
         // Maintenant que tout fonctionne bien et si je comprends bien les explications d'Alexis je crée un tableau avec les informations dont j'ai besoin du code, du nom, de la marque, et de l'image (je ne sais pas encore gérer le reste à rajouter au fur et a mesure)
         let infoObject = {
@@ -52,8 +53,11 @@ const ProductScreen = ({ route, navigation }) => {
           picture: response.data.product.image_front_small_url,
           brand: response.data.product.brands,
 
-          ingredient: response.data.product.ingredients,
+          //   ingredient: response.data.product.ingredients,
         };
+        // console.log("mon ingrédient", infoObject.ingrdients_ids_debug);
+        // console.log("mon produit", infoObject);
+
         // console.log(infoObject);
         setInfoObject(infoObject);
         setIsLoading(false);
@@ -70,8 +74,14 @@ const ProductScreen = ({ route, navigation }) => {
 
         //   si un prduit n'est pas scanné je l'ajoute
         if (stockageProduct === null) {
-          let tab = JSON.stringify(infoObject);
-          await AsyncStorage.setItem("product", tab);
+          let tab = [];
+
+          tab.unshift(infoObject);
+          await AsyncStorage.setItem("userHistory", JSON.stringify(tab));
+          //   let tab = JSON.stringify(infoObject);
+          //   await AsyncStorage.setItem("product", tab);
+          //   tab.unshift(infoObject);
+
           //   console.log(stockageProduct);
           // alors je crée un tableau
 
@@ -81,9 +91,9 @@ const ProductScreen = ({ route, navigation }) => {
           //   await AsyncStorage.setItem("product", JSON.stringify(tab));
         } else {
           let tabToString = JSON.parse(stockageProduct);
-          console.log("mon tableau", tabToString);
+          console.log("mon tableau json parse", tabToString);
 
-          tab = JSON.parse(tabToString);
+          let tab = JSON.parse(tabToString);
           tab.push(infoObject);
         }
 
@@ -93,7 +103,7 @@ const ProductScreen = ({ route, navigation }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [params.idProduct]);
 
   //   const favorites = () =>{
   //       const like = [...product];
@@ -122,7 +132,15 @@ const ProductScreen = ({ route, navigation }) => {
           <Text>{infoObject.brand}</Text>
           {/* <Text>{infoObject.ingredient}</Text> */}
         </View>
-        <Text></Text>
+        {/* <View>
+          {infoObject.ingredient.map((product, index) => {
+            return (
+              <View key={product.code}>
+                <Text>{product.text}</Text>
+              </View>
+            );
+          })}
+        </View> */}
         <View style={styles.container1}>
           <View style={styles.product}>
             <Text>Détails du produit</Text>

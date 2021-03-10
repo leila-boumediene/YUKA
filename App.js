@@ -45,7 +45,7 @@ import GoodProductsScreen from "./containers/GoodProductsScreen";
 function App() {
   const [product, setProduct] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  // const [product, setProduct] = useState();
+
   // const [IdProduct, setIdProduct] = useState();
 
   // création d'un ID

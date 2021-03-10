@@ -20,40 +20,17 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
-// import CameraScreen from "./CameraScreen";
-// import SplashScreen from "./containers/SplashScreen";
 import ProductScreen from "./ProductScreen";
-// import FavoritesScreen from "./FavoritesScreen";
-// je crée ma fonction ProductScreen qui va recevoir en argument une props navigation
+
 const ProductsScreen = ({ route, navigation }) => {
-  //   const navigation = useNavigation();
-  //   console.log("salut", route);
-  //   console.log("coucou", navigation);
   const [data, setData] = useState();
   const [historyProduct, setHistoryProduct] = useState();
 
-  //   const { params } = useRoute();
-
   useEffect(() => {
     const fetchData = async () => {
-      //   console.log(data);
       try {
         let product = await AsyncStorage.getItem("product");
-        // console.log("mon produit récupéré", product);
         let stock = JSON.parse(product);
-        // console.log("mon produit stocké", stock);
-        // product(stock);
-        // let infoObject = {
-        //   name: response.data.product.product_name,
-        //   picture: response.data.product.image_front_small_url,
-        //   brand: response.data.product.brands,
-
-        //   ingredient: response.data.product.ingredients,
-        // };
-
-        // let register = JSON.parse(historyProduct);
-        // setHistoryProduct(register);
-        // setIsLoading(false);
       } catch (error) {
         console.log(error.massage);
       }
@@ -76,7 +53,7 @@ const ProductsScreen = ({ route, navigation }) => {
         </View>
         {/* <SearchBar placeholder="Search" /> */}
         <Text>Products Screen</Text>
-        <Button
+        {/* <Button
           title="voir le produit"
           onPress={() =>
             navigation.navigate("Products", {
@@ -84,7 +61,7 @@ const ProductsScreen = ({ route, navigation }) => {
               params: { scannedId },
             })
           }
-        ></Button>
+        ></Button> */}
         <View>
           <Button
             title="scanner"
