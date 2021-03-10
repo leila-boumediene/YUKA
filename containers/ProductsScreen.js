@@ -1,6 +1,15 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React from "react";
-import { View, Text, Button, StyleSheet, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  FlatList,
+  SafeAreaView,
+  Image,
+} from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useEffect, useState } from "react";
@@ -13,12 +22,13 @@ const Stack = createStackNavigator();
 
 // import CameraScreen from "./CameraScreen";
 // import SplashScreen from "./containers/SplashScreen";
-// import ProductScreen from "./ProductScreen";
+import ProductScreen from "./ProductScreen";
 // import FavoritesScreen from "./FavoritesScreen";
 // je crée ma fonction ProductScreen qui va recevoir en argument une props navigation
 const ProductsScreen = ({ route, navigation }) => {
   //   const navigation = useNavigation();
   const [data, setData] = useState();
+  const [infoObject, setInfoObject] = useState();
 
   //   const { params } = useRoute();
 
@@ -27,17 +37,11 @@ const ProductsScreen = ({ route, navigation }) => {
       //   console.log(data);
       try {
         let product = await AsyncStorage.getItem("product");
-        console.log(product);
+        console.log("mon produit récupéré", product);
         let stock = JSON.pars(product);
-        console.log(stock);
+        console.log("mon produit stocké", stock);
         product(stock);
 
-        let addProducts = {
-          code: response.data.product.code,
-          name: response.data.product.name,
-          brand: response.data.product.brands,
-        };
-        console.log(response.data);
         // let register = JSON.parse(historyProduct);
         // setHistoryProduct(register);
         // setIsLoading(false);
@@ -49,12 +53,21 @@ const ProductsScreen = ({ route, navigation }) => {
   }, []);
 
   return (
-    <>
-      <View style={styles.container}>
-        <View style={styles.products}>
-          {/* <SearchBar placeholder="Search" /> */}
-          <Text>Products Screen</Text>
-          {/* <Button
+    <SafeAreaView>
+      <ScrollView>
+        <View>
+          <Image
+            source={{ uri: infoObject.picture }}
+            style={styles.image}
+            resizeMode="contain"
+          />
+          <Text>{infoObject.name}</Text>
+          <Text>{infoObject.brand}</Text>
+          <Text>{infoObject.ingredient}</Text>
+        </View>
+        {/* <SearchBar placeholder="Search" /> */}
+        <Text>Products Screen</Text>
+        {/* <Button
             title="voir le produit"
             onPress={() =>
               navigation.navigate("Products", {
@@ -63,16 +76,14 @@ const ProductsScreen = ({ route, navigation }) => {
               })
             }
           ></Button> */}
-          <View>
-            <Button
-              title="scanner"
-              onPress={() => navigation.navigate("Camera")}
-            ></Button>
-          </View>
+        <View>
+          <Button
+            title="scanner"
+            onPress={() => navigation.navigate("Camera")}
+          ></Button>
         </View>
-      </View>
-      <FlatList />
-    </>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
