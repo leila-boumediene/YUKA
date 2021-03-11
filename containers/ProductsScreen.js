@@ -25,10 +25,10 @@ import ProductScreen from "./ProductScreen";
 import CameraScreen from "./CameraScreen";
 
 const ProductsScreen = ({ route, navigation }) => {
-  const data = { product };
   const [historyProduct, setHistoryProduct] = useState();
   const [isLoading, setIsLoading] = useState(true);
-  const [product, setProduct] = useState();
+
+  const [data, setData] = useState();
 
   //   const fetchData = async () => {
 
@@ -47,6 +47,7 @@ const ProductsScreen = ({ route, navigation }) => {
         let stock = JSON.parse(product);
         console.log("stock", stock);
 
+        setData(stock);
         setIsLoading(false);
       } catch (error) {
         console.log(error.massage);
@@ -101,4 +102,5 @@ const styles = StyleSheet.create({
   products: {
     backgroundColor: "lightblue",
   },
+  image: { height: 200, width: 160 },
 });
