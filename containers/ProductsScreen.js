@@ -69,13 +69,13 @@ const ProductsScreen = ({ route, navigation }) => {
     <SafeAreaView>
       <ScrollView>
         <View>
-          <Image
+          {/* <Image
             source={{ uri: data.picture }}
             style={styles.image}
             resizeMode="contain"
           />
           <Text>{data.name}</Text>
-          <Text>{data.brand}</Text>
+          <Text>{data.brand}</Text> */}
           {/* <Text>{infoObject.ingredient}</Text> */}
         </View>
 

@@ -43,52 +43,53 @@ import GoodProductsScreen from "./containers/GoodProductsScreen";
 
 // Je crée ma fonction
 function App() {
-  const [product, setProduct] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  // const [product, setProduct] = useState();
+  // const [isLoading, setIsLoading] = useState(true);
 
-  // const [IdProduct, setIdProduct] = useState();
+  // // const [IdProduct, setIdProduct] = useState();
 
-  // création d'un ID
-  const IdProduct = async (id) => {
-    // si l'id existe dans la BDD alors je l'enregistre dans la mémoire du téléphone
-    if (id) {
-      AsyncStorage.setItem("productId", id);
-    } else {
-      alert("product is already exist");
-    }
-    IdProduct(id);
-  };
-  // faire une issue pour demander
-  useEffect(() => {
-    // Fetch the token from storage then navigate to our appropriate place
-    const fetchData = async () => {
-      // We should also handle error for production apps
-      const product = await AsyncStorage.getItem("product");
-
-      // This will switch to the App screen or Auth screen and this loading
-      // screen will be unmounted and thrown away.
-      setIsLoading(false);
-      setProduct(product);
-    };
-
-    fetchData();
-  }, []);
-
+  // // création d'un ID
+  // const IdProduct = async (id) => {
+  //   // si l'id existe dans la BDD alors je l'enregistre dans la mémoire du téléphone
+  //   if (id) {
+  //     AsyncStorage.setItem("productId", id);
+  //   } else {
+  //     alert("product is already exist");
+  //   }
+  //   IdProduct(id);
+  // };
+  // // faire une issue pour demander
   // useEffect(() => {
+  //   // Fetch the token from storage then navigate to our appropriate place
   //   const fetchData = async () => {
-  //     const productData = await AsyncStorage.getItem("productData");
-  //     setProductData(productData);
+  //     // We should also handle error for production apps
+  //     const product = await AsyncStorage.getItem("product");
+
+  //     // This will switch to the App screen or Auth screen and this loading
+  //     // screen will be unmounted and thrown away.
   //     setIsLoading(false);
+  //     setProduct(product);
   //   };
-  //   fetchData;
+
+  //   fetchData();
   // }, []);
-  return isLoading ? (
-    <ActivityIndicator
-      color="pink"
-      size="large"
-      style={styles.activityIndicator}
-    />
-  ) : (
+
+  // // useEffect(() => {
+  // //   const fetchData = async () => {
+  // //     const productData = await AsyncStorage.getItem("productData");
+  // //     setProductData(productData);
+  // //     setIsLoading(false);
+  // //   };
+  // //   fetchData;
+  // // }, []);
+  // return isLoading ? (
+  //   <ActivityIndicator
+  //     color="pink"
+  //     size="large"
+  //     style={styles.activityIndicator}
+  //   />
+  // ) : (
+  return (
     <SafeAreaView style={styles.container}>
       {/* <ScrollView style={styles.scrollView}> */}
       <NavigationContainer>
@@ -154,7 +155,7 @@ function App() {
                   {() => (
                     <Stack.Navigator>
                       <Stack.Screen name="Camera">
-                        {() => <CameraScreen IdProduct={IdProduct} />}
+                        {() => <CameraScreen />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
