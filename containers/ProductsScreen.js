@@ -21,22 +21,35 @@ const Tab = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
 import ProductScreen from "./ProductScreen";
+import CameraScreen from "./CameraScreen";
 
 const ProductsScreen = ({ route, navigation }) => {
   const [data, setData] = useState();
   const [historyProduct, setHistoryProduct] = useState();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let product = await AsyncStorage.getItem("product");
-        let stock = JSON.parse(product);
-      } catch (error) {
-        console.log(error.massage);
-      }
-    };
-    fetchData();
-  }, []);
+  const fetchData = async () => {
+    let stockageProduct = await AsyncStorage.getItem("product");
+
+    let tabToString = await AsyncStorage.getItem("product");
+    let product = JSON.parse(tabToString);
+
+    console.log("clog de asnyc de products", product);
+  };
+
+  //   useEffect(() => {
+  //     const fetchData = async () => {
+  //       try {
+  //         let product = await AsyncStorage.getItem("product");
+  //         let stock = JSON.parse(product);
+  //       } catch (error) {
+  //         console.log(error.massage);
+  //       }
+  //     };
+  //     fetchData();
+  //   }, []);
+
+  //   let stockageProduct = JSON.parse("product");
+  //   console.log("mon tableau json parse", stockageProduct);
 
   return (
     <SafeAreaView>

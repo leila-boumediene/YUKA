@@ -62,6 +62,15 @@ const ProductScreen = ({ route, navigation }) => {
         setInfoObject(infoObject);
         setIsLoading(false);
 
+        let stockageProduct = "product";
+        await AsyncStorage.setItem("stockageProduct", stockageProduct);
+
+        let tab = JSON.stringify({ infoObject });
+        await AsyncStorage.setItem("product", tab);
+
+        console.log("1er clog de asnyc", stockageProduct);
+        console.log("2eme clog de asnyc", tab);
+
         // AsyncStorage permet de garder dans la mémoire du téléphone mes produits que je pourrais sauvegarder dans products
         // AsyncStorage ne prend que des chaînes de caractère
         // c'est setItem qui permet à AsyncStorage de sauvegarder les données avec une clé, valeur
@@ -69,33 +78,31 @@ const ProductScreen = ({ route, navigation }) => {
 
         // je récupère les données avec getItem
 
-        let stockageProduct = await AsyncStorage.getItem("product");
-        console.log("les infos", stockageProduct);
+        // let stockageProduct = await AsyncStorage.getItem("product");
+        // console.log("les infos", stockageProduct);
 
         //   si un prduit n'est pas scanné je l'ajoute
-        if (stockageProduct === null) {
-          let tab = [];
+        // if (stockageProduct === null) {
+        // let tab = JSON.parse(stockageProduct);
+        // await AsyncStorage.setItem("product", tab);
+        //   let tab = JSON.stringify(infoObject);
+        //   await AsyncStorage.setItem("product", tab);
+        //   tab.unshift(infoObject);
 
-          tab.unshift(infoObject);
-          await AsyncStorage.setItem("userHistory", JSON.stringify(tab));
-          //   let tab = JSON.stringify(infoObject);
-          //   await AsyncStorage.setItem("product", tab);
-          //   tab.unshift(infoObject);
+        //   console.log(stockageProduct);
+        // alors je crée un tableau
 
-          //   console.log(stockageProduct);
-          // alors je crée un tableau
+        // j'ajoute les élèments dans mon objet infoObject et dans le tableau
+        //   tab.push(infoObject);
+        //  je stringuify mon tableau
+        //   await AsyncStorage.setItem("product", JSON.stringify(tab));
+        // } else {
+        //   stockageProduct = JSON.parse(stockageProduct);
+        //   console.log("mon tableau json parse", tabToString);
 
-          // j'ajoute les élèments dans mon objet infoObject et dans le tableau
-          //   tab.push(infoObject);
-          //  je stringuify mon tableau
-          //   await AsyncStorage.setItem("product", JSON.stringify(tab));
-        } else {
-          let tabToString = JSON.parse(stockageProduct);
-          console.log("mon tableau json parse", tabToString);
-
-          let tab = JSON.parse(tabToString);
-          tab.push(infoObject);
-        }
+        //   let tab = JSON.parse(tabToString);
+        //   tab.push(infoObject);
+        // }
 
         setIsLoading(false);
       } catch (error) {
