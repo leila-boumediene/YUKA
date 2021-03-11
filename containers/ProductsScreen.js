@@ -7,6 +7,7 @@ import {
   StyleSheet,
   FlatList,
   SafeAreaView,
+  ActivityIndicator,
   Image,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
@@ -24,57 +25,61 @@ import ProductScreen from "./ProductScreen";
 import CameraScreen from "./CameraScreen";
 
 const ProductsScreen = ({ route, navigation }) => {
-  const [data, setData] = useState();
+  const data = { product };
   const [historyProduct, setHistoryProduct] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [product, setProduct] = useState();
 
-  const fetchData = async () => {
-    let stockageProduct = await AsyncStorage.getItem("product");
+  //   const fetchData = async () => {
 
-    let tabToString = await AsyncStorage.getItem("product");
-    let product = JSON.parse(tabToString);
+  // let tabToString = await AsyncStorage.getItem("product");
 
-    console.log("clog de asnyc de products", product);
-  };
+  //     console.log("clog de asnyc de products", product);
+  //     console.log("clog de asnyc de products", stockageProduct);
+  //   };
 
-  //   useEffect(() => {
-  //     const fetchData = async () => {
-  //       try {
-  //         let product = await AsyncStorage.getItem("product");
-  //         let stock = JSON.parse(product);
-  //       } catch (error) {
-  //         console.log(error.massage);
-  //       }
-  //     };
-  //     fetchData();
-  //   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let product = await AsyncStorage.getItem("product");
+        console.log("Mes produits stockés", product);
+
+        let stock = JSON.parse(product);
+        console.log("stock", stock);
+
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error.massage);
+      }
+    };
+    fetchData();
+  }, []);
 
   //   let stockageProduct = JSON.parse("product");
   //   console.log("mon tableau json parse", stockageProduct);
 
-  return (
+  return isLoading ? (
+    <ActivityIndicator
+      color="pink"
+      size="large"
+      style={styles.activityIndicator}
+    />
+  ) : (
     <SafeAreaView>
       <ScrollView>
         <View>
-          {/* <Image
-            source={{ uri: product.object.picture }}
+          <Image
+            source={{ uri: data.picture }}
             style={styles.image}
             resizeMode="contain"
-          /> */}
-          {/* <Text>{product.object.name}</Text> */}
-          {/* <Text>{product.object.brand}</Text>
-          <Text>{iproduct.object.ingredient}</Text> */}
+          />
+          <Text>{data.name}</Text>
+          <Text>{data.brand}</Text>
+          {/* <Text>{infoObject.ingredient}</Text> */}
         </View>
-        {/* <SearchBar placeholder="Search" /> */}
+
         <Text>Products Screen</Text>
-        {/* <Button
-          title="voir le produit"
-          onPress={() =>
-            navigation.navigate("Products", {
-              screen: "Product",
-              params: { scannedId },
-            })
-          }
-        ></Button> */}
+
         <View>
           <Button
             title="scanner"

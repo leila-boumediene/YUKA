@@ -62,14 +62,14 @@ const ProductScreen = ({ route, navigation }) => {
         setInfoObject(infoObject);
         setIsLoading(false);
 
-        let stockageProduct = "product";
-        await AsyncStorage.setItem("stockageProduct", stockageProduct);
+        // let stockageProduct = "product";
+        // await AsyncStorage.setItem("stockageProduct", stockageProduct);
 
-        let tab = JSON.stringify({ infoObject });
-        await AsyncStorage.setItem("product", tab);
+        let stockageProduct = JSON.stringify(infoObject);
+        await AsyncStorage.setItem("product", stockageProduct);
 
-        console.log("1er clog de asnyc", stockageProduct);
-        console.log("2eme clog de asnyc", tab);
+        // console.log("1er clog de asnyc", stockageProduct);
+        console.log(" clog de asnyc", stockageProduct);
 
         // AsyncStorage permet de garder dans la mémoire du téléphone mes produits que je pourrais sauvegarder dans products
         // AsyncStorage ne prend que des chaînes de caractère
